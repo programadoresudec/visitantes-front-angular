@@ -1,0 +1,73 @@
+<div>
+  <div class="submit-form">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="fechaingreso">Fecha Ingreso</label>
+        <input
+          type="datetime-local"
+          class="form-control"
+          id="fechaingreso"
+          required
+          [(ngModel)]="registro.fechaIngreso"
+          [ngModel]="registro.fechaIngreso | date: 'yyyy-MM-ddTHH:mm:ss'"
+          name="fechaingreso"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="observaciones">Observaciones</label>
+        <textarea
+          class="form-control"
+          id="observaciones"
+          required
+          [(ngModel)]="registro.observaciones"
+          name="observaciones"
+        >
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label for="instalaciones">instalaciones</label>
+        <select
+          name="instalaciones"
+          id="instalaciones"
+          class="form-control"
+          [(ngModel)]="registro.instalacion"
+        >
+          <option
+            *ngFor="let objeto of listadoInstalaciones"
+            [ngValue]="objeto"
+          >
+            {{ objeto.Nombre }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="visitantes">visitantes</label>
+        <select
+          name="visitantes"
+          class="form-control"
+          [(ngModel)]="registro.visitante"
+        >
+          <option [ngValue]="objeto" *ngFor="let objeto of listadoVisitantes">
+            {{ objeto.Nombres }} {{ objeto.Apellidos }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button (click)="guardarRegistro()" class="btn btn-success">Guardar</button>
+        </div>
+        <div class="col-6">
+          <a class="btn btn-dark" routerLink="/visitantes"> Regresar </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="submitted">
+      <h4>Registro a instalacion satistactoriamente!</h4>
+      <button class="btn btn-success" (click)="newRegistro()">
+        nuevo registro
+      </button>
+      <a class="btn btn-dark" routerLink="/visitantes"> Salir </a>
+    </div>
+  </div>
+</div>

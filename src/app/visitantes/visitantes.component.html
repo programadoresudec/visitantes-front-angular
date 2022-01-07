@@ -1,0 +1,73 @@
+<div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="busque por nombre visitante"
+        [(ngModel)]="nombreVisitante"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="searchVisitante()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4>Registro de visitantes</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let registro of registrosVisitante; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveRegistro(registro, i)"
+      >
+        {{ registro.visitante.Nombres }} {{ registro.visitante.Apellidos}}
+        <a class="{{registro.badge}}">{{registro.estadoRetirado ? "Retirado de la Instalación.": "Pendiente por retirarse."}} </a>
+      </li>
+    </ul>
+
+    <a class="m-3 btn btn-sm btn-dark" routerLink="/registroVisitante">
+      Registrar Visitante a instalación
+    </a>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="currentRegistroVisitante.Id">
+      <h4>Registro</h4>
+      <div>
+        <label><strong>{{currentRegistroVisitante.visitante.TipoIdentificacion.Siglas}}: </strong></label>
+         {{ currentRegistroVisitante.visitante.Identificacion }}
+      </div>
+      <div>
+        <label><strong>Observaciones:</strong></label>
+        {{ currentRegistroVisitante.observaciones }}
+      </div>
+      <div>
+        <label><strong>Instalación de registro:</strong></label>
+        {{ currentRegistroVisitante.instalacion.Nombre }}
+      </div>
+      <div>
+        <label><strong>Fecha De Ingreso:</strong></label>
+        {{ currentRegistroVisitante.fechaIngreso }}
+      </div>
+      <div>
+        <label><strong>Fecha De Salida:</strong></label>
+        {{ currentRegistroVisitante.fechaSalida }}
+      </div>
+      <button class="m-3 btn btn-sm btn-danger"  [hidden]="currentRegistroVisitante.estadoRetirado"
+      (click)="retirarVisitante(currentRegistroVisitante.Id)">
+        Retirar visitante
+      </button>
+    </div>
+
+    <div *ngIf="!currentRegistroVisitante">
+      <br />
+      <p>Cargando...</p>
+    </div>
+  </div>
+</div>
